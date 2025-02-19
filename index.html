@@ -134,6 +134,32 @@
             background-color: #e74c3c;
             color: white;
         }
+
+        /* Add new styles for filter section */
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-control input[type="number"] {
+            width: 100px;
+        }
+
+        .filter-control select {
+            width: 150px;
+        }
     </style>
 </head>
 <body>
@@ -144,6 +170,26 @@
                 <button class="btn btn-primary" onclick="toggleForm()">Adicionar bicicleta</button>
                 <button class="btn btn-primary" onclick="fetchBikes()">Atualizar</button>
             </div>
+        </div>
+
+        <!-- New filter section -->
+        <div class="filter-section">
+            <div class="filter-control">
+                <input type="float" id="minPrice" placeholder="Preço mínimo">
+                <span>-</span>
+                <input type="float" id="maxPrice" placeholder="Preço máximo">
+            </div>
+
+            <div class="filter-control">
+                <label>
+                    <input type="checkbox" id="colorFilterToggle" onchange="toggleColorFilter()"> Filtrar por cor
+                </label>
+                <select id="colorFilter" disabled>
+                    <option value="">Selecione uma cor</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="applyFilters()">Filtrar</button>
         </div>
 
         <form id="bikeForm" class="bike-form" onsubmit="handleSubmit(event)">
@@ -197,6 +243,8 @@
     <script>
         const API_URL = 'https://bike-shop-api.vercel.app/api';
         let isEditing = false;
+        let allBikes = [];
+        const colorSelect = document.getElementById('colorFilter');
 
         const populateDB = async () => {
             try {
@@ -232,11 +280,51 @@
         async function fetchBikes() {
             try {
                 const response = await fetch(API_URL);
-                const bikes = await response.json();
-                renderBikes(bikes);
+                allBikes = await response.json();
+                renderBikes(allBikes);
+                populateColorFilters(allBikes);
             } catch (error) {
                 alert('Error fetching bikes' + error);
             }
+        }
+
+        function populateColorFilters(bikes) {
+            const colors = [...new Set(bikes.map(bike => bike.color.toLowerCase()))];
+            colorSelect.innerHTML = '<option value="">Selecione uma cor</option>';
+            colors.forEach(color => {
+                const option = document.createElement('option');
+                option.value = color;
+                option.textContent = capitalizeFirstLetter(color);
+                colorSelect.appendChild(option);
+            });
+        }
+
+        function toggleColorFilter() {
+            const colorCheckbox = document.getElementById('colorFilterToggle');
+            colorSelect.disabled = !colorCheckbox.checked;
+        }
+
+        function applyFilters() {
+            const minPrice = parseFloat(document.getElementById('minPrice').value);
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value);
+            const selectedColor = colorSelect.value;
+            const useColorFilter = document.getElementById('colorFilterToggle').checked;
+
+            let filtered = [...allBikes];
+
+            if (!isNaN(minPrice)) {
+                filtered = filtered.filter(bike => bike.price >= minPrice);
+            }
+
+            if (!isNaN(maxPrice)) {
+                filtered = filtered.filter(bike => bike.price <= maxPrice);
+            }
+
+            if (useColorFilter && selectedColor) {
+                filtered = filtered.filter(bike => bike.color.toLowerCase() === selectedColor);
+            }
+
+            renderBikes(filtered);
         }
 
         function capitalizeFirstLetter(val) {
