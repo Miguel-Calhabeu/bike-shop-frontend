@@ -1,14 +1,31 @@
----
-name: HTML Starter
-slug: html-starter-with-analytics
-description: HTML5 template with analytics and advanced routing configuration.
-deployUrl: https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/solutions/html&project-name=html
-relatedTemplates:
-  - nextjs-boilerplate
----
+# Bike Shop Manager
 
-# HTML Starter
+A web application for managing a bike shop's inventory. This project includes a frontend built with HTML, CSS, and JavaScript, and connects to a backend API for managing bike data.
 
-This is a starter HTML5 templates which is configured with Vercel Analytics (through a `script` tag), advanced routing with [Vercel Edge Middleware](https://vercel.com/docs/concepts/functions/edge-middleware), as well as some basic styles
+## Features
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/solutions/html&project-name=html)
+- **Add Bikes**: Add new bikes to the inventory with details like brand, model, color, gears, and price.
+- **Edit Bikes**: Update the price of existing bikes.
+- **Sell Bikes**: Remove bikes from the inventory when sold.
+- **Real-Time Updates**: Fetch and display the latest bike inventory from the backend API.
+- **Responsive Design**: Works on both desktop and mobile devices.
+
+## Technologies Used
+
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Node.js, Express (connected via API)
+- **API**: [Bike Shop API](https://bike-shop-api.vercel.app/api)
+
+## Setup Instructions
+
+### Prerequisites
+
+- A modern web browser (e.g., Chrome, Firefox, Edge).
+- Access to the Bike Shop API (ensure the backend is running).
+
+### Running the Application
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Miguel-Calhabeu/bike-shop-api.git
+   cd bike-shop-api
