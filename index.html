@@ -1,96 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-    <title>Vercel HTML Starter</title>
-    <meta
-      name="description"
-      content="High-performance HTML based website template."
-    />
-  </head>
-  <body>
-    <h1>Vercel HTML Starter</h1>
-    <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
-    </p>
-    <h2>Simple, privacy-friendly analytics</h2>
-    <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
-    </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
-    </p>
-    <h2>Integrated with git</h2>
-    <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Shop Manager</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #ecf0f1;
+            --accent: #3498db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f5f6fa;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .bike-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .bike-form.active {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .inline-editor {
+            display: none;
+            width: 300px;
+            margin-right: 0.5rem;
+        }
+        .inline-editor input {
+            margin-right: 0.5rem;
+        }
+
+        td.actions {
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-control {
+            margin-bottom: 1rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .bike-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .bike-table th,
+        .bike-table td {
+            padding: 1rem;
+            text-align: center; /* Center align text */
+            border-bottom: 1px solid #eee;
+        }
+
+        .bike-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+
+        .actions button {
+            margin-right: 0.5rem;
+        }
+
+        .actions-container {
+            display: flex;
+            align-items: center;
+            max-width: 300px;
+        }
+
+        .btn-edit {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bike Shop Manager</h1>
+            <div class="actions">
+                <button class="btn btn-primary" onclick="toggleForm()">Adicionar bicicleta</button>
+                <button class="btn btn-primary" onclick="fetchBikes()">Atualizar</button>
+            </div>
+        </div>
+
+        <form id="bikeForm" class="bike-form" onsubmit="handleSubmit(event)">
+            <div class="form-grid">
+                <div class="form-control">
+                    <label>Marca</label>
+                    <input type="text" id="brand" required>
+                </div>
+                <div class="form-control">
+                    <label>Modelo</label>
+                    <input type="text" id="model" required>
+                </div>
+                <div class="form-control">
+                    <label>Cor</label>
+                    <input type="text" id="color" required>
+                </div>
+                <div class="form-control">
+                    <label>Marchas</label>
+                    <input type="number" id="gears" required>
+                </div>
+                <div class="form-control">
+                    <label>Preço</label>
+                    <input type="float" id="price" required>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Adicionar</button>
+                <button type="button" class="btn" onclick="toggleForm(false)">Cancelar</button>
+            </div>
+            <input type="hidden" id="bikeId">
+        </form>
+
+        <table class="bike-table">
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Preço</th>
+                    <th>Cor</th>
+                    <th>Marchas</th>
+                    <th>Estoque</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="bikeList">
+                <!-- Bike entries will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let isEditing = false;
+
+        const populateDB = async () => {
+            try {
+                const response = await fetch(`${API_URL}/stock/populate/10`, { method: 'POST' });
+                const result = await response.json();
+                if (response.ok) {
+                    fetchBikes();
+                } else {
+                    alert(result.error);
+                }
+            } catch (error) {
+                alert('Error populating database: ' + error);
+            }
+        }
+
+        const increaseStock = async () => {
+            try {
+                const response = await fetch(`${API_URL}/stock/increase/10`, { method: 'POST' });
+                const result = await response.json();
+                if (response.ok) {
+                    fetchBikes();
+                } else {
+                    alert(result.error);
+                }
+            } catch (error) {
+                alert('Error increasing stock: ' + error);
+            }
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', fetchBikes);
+
+        async function fetchBikes() {
+            try {
+                const response = await fetch(API_URL);
+                const bikes = await response.json();
+                renderBikes(bikes);
+            } catch (error) {
+                alert('Error fetching bikes' + error);
+            }
+        }
+
+        function capitalizeFirstLetter(val) {
+            return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+        }
+
+        function renderBikes(bikes) {
+            const tbody = document.getElementById('bikeList');
+            tbody.innerHTML = bikes.map(bike => `
+                <tr>
+                    <td>${bike.brand}</td>
+                    <td>${bike.model}</td>
+                    <td>R$${bike.price.toFixed(2)}</td>
+                    <td>${capitalizeFirstLetter(bike.color)}</td>
+                    <td>${bike.gears}</td>
+                    <td>${bike.stock}</td>
+                    <td class="actions">
+                        <div class="actions-container">
+                            <button class="btn btn-edit" onclick="toggleLineEditor('${bike._id}', true)">Alterar preço</button>
+                            <form id="editForm-${bike._id}" class="inline-editor" onsubmit="editBike(event, '${bike._id}')">
+                                <input type="float" id="price-${bike._id}" required>
+                                <button type="submit" class="btn btn-primary">Alterar</button>
+                                <button type="button" class="btn btn-delete" onclick="toggleLineEditor('${bike._id}', false)">Cancelar</button>
+                            </form>
+                            <button class="btn btn-delete" onclick="sellBike('${bike._id}')">Vender</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+            const bike = {
+                brand: document.getElementById('brand').value,
+                model: document.getElementById('model').value,
+                color: document.getElementById('color').value,
+                gears: parseInt(document.getElementById('gears').value),
+                price: parseFloat(document.getElementById('price').value),
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bike)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    fetchBikes();
+                    toggleForm(false);
+                } else {
+                    alert(result.error);
+                }
+            } catch (error) {
+                alert('Erro ao adicionar: ' + error);
+            }
+        }
+
+        async function editBike(event, id) {
+            event.preventDefault();
+            const newPrice = parseFloat(document.getElementById(`price-${id}`).value);
+            try {
+                const response = await fetch(`${API_URL}/price/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ newPrice })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    toggleLineEditor(id, false);
+                    fetchBikes();
+                } else {
+                    alert(result.error);
+                }
+            } catch (error) {
+                alert(error);
+            }
+        }
+
+        async function sellBike(id) {
+            try {
+                await fetch(`${API_URL}/${id}`, {
+                    method: 'DELETE'
+                });
+                fetchBikes();
+            } catch (error) {
+                alert('Error selling bike: ' + error);
+            }
+        }
+
+        function toggleLineEditor(id, show) {
+            const form = document.getElementById(`editForm-${id}`);
+            if (show) {
+                form.style.display = 'flex';
+                form.previousElementSibling.style.display = 'none';
+                form.nextElementSibling.style.display = 'none';
+            } else {
+                form.style.display = 'none';
+                form.previousElementSibling.style.display = 'block';
+                form.nextElementSibling.style.display = 'block';
+            }
+        }
+
+        function toggleForm(show = true) {
+            const form = document.getElementById('bikeForm')
+
+            form.classList.toggle('active', show);
+            if (!show) {
+                form.reset();
+            }
+        }
+    </script>
+</body>
 </html>
