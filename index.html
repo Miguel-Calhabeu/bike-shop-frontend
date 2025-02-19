@@ -248,20 +248,20 @@
             tbody.innerHTML = bikes.map(bike => `
                 <tr>
                     <td>${bike.brand}</td>
-                    <td>${bike.model}</td>
+                    <td>${bike.bikeModel}</td>
                     <td>R$${bike.price.toFixed(2)}</td>
                     <td>${capitalizeFirstLetter(bike.color)}</td>
                     <td>${bike.gears}</td>
                     <td>${bike.stock}</td>
                     <td class="actions">
                         <div class="actions-container">
-                            <button class="btn btn-edit" onclick="toggleLineEditor('${bike._id}', true)">Alterar preço</button>
-                            <form id="editForm-${bike._id}" class="inline-editor" onsubmit="editBike(event, '${bike._id}')">
-                                <input type="float" id="price-${bike._id}" required>
+                            <button class="btn btn-edit" onclick="toggleLineEditor('${bike.bikeId}', true)">Alterar preço</button>
+                            <form id="editForm-${bike.bikeId}" class="inline-editor" onsubmit="editBike(event, '${bike.bikeId}')">
+                                <input type="float" id="price-${bike.bikeId}" required>
                                 <button type="submit" class="btn btn-primary">Alterar</button>
-                                <button type="button" class="btn btn-delete" onclick="toggleLineEditor('${bike._id}', false)">Cancelar</button>
+                                <button type="button" class="btn btn-delete" onclick="toggleLineEditor('${bike.bikeId}', false)">Cancelar</button>
                             </form>
-                            <button class="btn btn-delete" onclick="sellBike('${bike._id}')">Vender</button>
+                            <button class="btn btn-delete" onclick="sellBike('${bike.bikeId}')">Vender</button>
                         </div>
                     </td>
                 </tr>
