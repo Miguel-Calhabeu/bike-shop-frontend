@@ -12,7 +12,7 @@ A web application for managing a bike shop's inventory. This project includes a 
 
 ## Technologies Used
 
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: HTML, CSS, JavaScript. Acess in [Bike Shop](https://bike-shop-frontend-sigma.vercel.app/)
 - **Backend**: Node.js, Express (connected via API)
 - **API**: [Bike Shop API](https://bike-shop-api.vercel.app/api)
 
